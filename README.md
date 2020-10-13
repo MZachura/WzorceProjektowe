@@ -3,4 +3,4 @@
 # ToDo:
 
 - [ ] use-case diagram
-- [ ] diagram klas
+- [ ] diagram klas - [ ] test
