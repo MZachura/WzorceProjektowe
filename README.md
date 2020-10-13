@@ -3,4 +3,11 @@
 # ToDo:
 
 - [ ] use-case diagram
-- [ ] diagram klas - [ ] test
+- [ ] diagram klas
+
+
+# ToDo Marcin:
+
+# ToDo Mateusz: 
+
+# Finished:
