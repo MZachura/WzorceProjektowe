@@ -22,6 +22,7 @@ class Game:
     def set_up(self):
         self.all_sprites = pygame.sprite.Group()    # tu dodajesz wszytkie sprity
         self.walls = pygame.sprite.Group()
+        self.enemies = pygame.sprite.Group()
 
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
