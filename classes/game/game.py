@@ -6,6 +6,9 @@ from  classes.game.map.camera import Camera
 from classes.game.mobs.player import Player
 from classes.game.obstacles.wall import Wall
 from classes.game.mobs.enemy import Enemy
+
+vec = pygame.math.Vector2
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -27,11 +30,14 @@ class Game:
         self.enemy_img = pygame.image.load(path.join(IMG_FOLDER, ENEMY_IMG)).convert_alpha()
         self.enemy_img = pygame.transform.scale(self.enemy_img, (TILE_SIZE, TILE_SIZE))
 
+        self.bullet_img = pygame.image.load(path.join(IMG_FOLDER, BULLET_IMG)).convert_alpha()
+
     # tu tworzysz wszystkie obiekty np kamere 
     def set_up(self):
         self.all_sprites = pygame.sprite.Group()    # tu dodajesz wszytkie sprity
         self.walls = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
 
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
@@ -61,13 +67,32 @@ class Game:
     def update(self):
         self.all_sprites.update()       # to wywoluje metode update u kazdego kto jest dodany do tej grupy
         self.camera.update(self.player)
+        
+        # czy zombie dotknely gracza O.O
+        hits = pygame.sprite.spritecollide(self.player, self.enemies, False, collide_hit_rect)
+        for hit in hits:
+            self.player.health -= ENEMY_DMG
+            hit.vel = vec(0, 0)
+            if self.player.health <= 0:
+                self.run = False
+        if hits:
+            self.player.pos += vec(KNOCK_BACK, 0).rotate(-hits[0].rot)
+
+        # czy pociski trafily Enemy
+        hits = pygame.sprite.groupcollide(self.enemies, self.bullets, False, True)
+        for hit in hits:
+            hit.health -= BULLET_DMG  
+            hit.vel = vec(0, 0)
 
     def draw(self):
         pygame.display.set_caption("{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BG_COLOR)
         self.draw_grid()
         for sprite in self.all_sprites:
+            if isinstance(sprite, Enemy):
+                sprite.draw_health()
             self.screen.blit(sprite.image, self.camera.apply(sprite))
+        draw_player_health(self.screen, 10, 10, self.player.health / PLAYER_HEALTH)
         pygame.display.update()
 
 

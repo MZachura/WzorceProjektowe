@@ -1,5 +1,6 @@
 import pygame
 from config import *
+from classes.game.weapons.bullet import Bullet
 vec = pygame.math.Vector2
 
 class Player(pygame.sprite.Sprite):
@@ -17,38 +18,27 @@ class Player(pygame.sprite.Sprite):
         self.pos = vec(x, y) * TILE_SIZE
         self.rot = 0
 
-    def collide_with_walls(self, dir):
-        if dir == 'x':
-            hits = pygame.sprite.spritecollide(self, self.game.walls, False, collide_hit_rect)
-            if hits:
-                if self.vel.x > 0:
-                    self.pos.x = hits[0].rect.left - self.hit_rect.width / 2
-                if self.vel.x < 0:
-                    self.pos.x = hits[0].rect.right + self.hit_rect.width / 2
-                self.vel.x = 0
-                self.hit_rect.centerx = self.pos.x
-        if dir == 'y':
-            hits = pygame.sprite.spritecollide(self, self.game.walls, False, collide_hit_rect)
-            if hits:
-                if self.vel.y > 0:
-                    self.pos.y = hits[0].rect.top - self.hit_rect.height / 2
-                if self.vel.y < 0:
-                    self.pos.y = hits[0].rect.bottom + self.hit_rect.height / 2
-                self.vel.y = 0
-                self.hit_rect.centery = self.pos.y
+        self.last_shot = 0
+        self.health = PLAYER_HEALTH
+
+
 
     def update(self):
         self.get_keys()
         self.rot = (self.rot + self.rot_speed * self.game.dt) % 360
         self.image = pygame.transform.rotate(self.game.player_img, self.rot)
+
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
         self.pos += self.vel * self.game.dt
+
         self.hit_rect.centerx = self.pos.x
-        self.collide_with_walls('x')
+        collide_with_walls(self, self.game.walls, 'x')
         self.hit_rect.centery = self.pos.y
-        self.collide_with_walls('y')
-        self.rect.center = self.hit_rect.center
+        collide_with_walls(self, self.game.walls, 'y')
+        self.rect.center = self.hit_rect.center # niby dzila tez bez tego 
+
+
 
     def get_keys(self):
         self.rot_speed = 0
@@ -62,3 +52,11 @@ class Player(pygame.sprite.Sprite):
             self.vel = vec(PLAYER_SPEED, 0).rotate(-self.rot)
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.vel = vec(-PLAYER_SPEED / 2, 0).rotate(-self.rot)
+        
+        if keys[pygame.K_SPACE]:
+            now = pygame.time.get_ticks()
+            if now - self.last_shot > SHOOT_RATE:
+                self.last_shot = now
+                dir = vec(1, 0).rotate(-self.rot)   # w ktora strone ma leciec
+                Bullet(self.game, self.pos, dir)
+                
