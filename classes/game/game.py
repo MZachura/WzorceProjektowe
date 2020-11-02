@@ -5,6 +5,7 @@ from  classes.game.map.tilemap import Map
 from  classes.game.map.camera import Camera
 from classes.game.mobs.player import Player
 from classes.game.obstacles.wall import Wall
+from classes.game.mobs.enemy import Enemy
 class Game:
     def __init__(self):
         pygame.init()
@@ -17,7 +18,15 @@ class Game:
     # tworzy obiekt Map ktory zczytuje tilemape
     def load_data(self):
         self.map = Map(path.join(MAP_FOLDER, "map.txt"))
-    
+        self.player_img = pygame.image.load(path.join(PLAYER_IMG_FOLDER, PLAYER_IMG)).convert_alpha()
+        self.player_img = pygame.transform.scale(self.player_img, (TILE_SIZE, TILE_SIZE))
+
+        self.wall_img = pygame.image.load(path.join(IMG_FOLDER, WALL_IMG)).convert_alpha()
+        self.wall_img = pygame.transform.scale(self.wall_img, (TILE_SIZE, TILE_SIZE))
+
+        self.enemy_img = pygame.image.load(path.join(IMG_FOLDER, ENEMY_IMG)).convert_alpha()
+        self.enemy_img = pygame.transform.scale(self.enemy_img, (TILE_SIZE, TILE_SIZE))
+
     # tu tworzysz wszystkie obiekty np kamere 
     def set_up(self):
         self.all_sprites = pygame.sprite.Group()    # tu dodajesz wszytkie sprity
@@ -54,6 +63,7 @@ class Game:
         self.camera.update(self.player)
 
     def draw(self):
+        pygame.display.set_caption("{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BG_COLOR)
         self.draw_grid()
         for sprite in self.all_sprites:
@@ -77,6 +87,9 @@ class Game:
         elif tile == '1':
             Wall(self, col, row)
 
+        elif tile == "M":
+            Enemy(self, col, row)
+            
 
     def quit(self):
         self.run = False
