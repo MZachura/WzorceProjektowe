@@ -1,5 +1,6 @@
 from classes.game.map.tilemap import Map
 import pygame
+import random
 from config import *
 from  classes.game.map.tilemap import Map
 from  classes.game.map.camera import Camera
@@ -16,6 +17,9 @@ class Game:
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.load_data()
+        self.level = 1
+        self.score = 0
+        self.how_many_to_spawn = 0
 
     """FUNKCJE GLOWNE"""
     # tworzy obiekt Map ktory zczytuje tilemape
@@ -84,6 +88,8 @@ class Game:
             hit.health -= BULLET_DMG  
             hit.vel = vec(0, 0)
 
+        
+
     def draw(self):
         pygame.display.set_caption("{:.2f}".format(self.clock.get_fps()))
         self.screen.fill(BG_COLOR)
@@ -93,7 +99,31 @@ class Game:
                 sprite.draw_health()
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         draw_player_health(self.screen, 10, 10, self.player.health / PLAYER_HEALTH)
+        score_lbl = f"SCORE: {self.score}"
+        draw_score(self.screen, score_lbl)
         pygame.display.update()
+
+    def gen_coords(self):
+        find_coords = True
+        while (find_coords):
+            cordx = random.randint(1, GRID_WIDTH - 1) #* TILE_SIZE
+            cordy = random.randint(1, GRID_HEIGHT - 1) #* TILE_SIZE
+
+            if self.player.pos.x != cordx and self.player.pos.y != cordy:
+                find_coords = False # znalazlo i nie koliduje z playerm
+        return cordx, cordy
+    '''
+    def generate_new_enemy(self):
+        while (len(self.enemies) < ENEMY_SPAWN_NO * self.level):
+            x, y = self.gen_coords()
+            Enemy(self, x, y)
+    '''
+
+    def generate_new_enemy(self):
+        x, y = self.gen_coords()
+        Enemy(self, x, y)            
+
+    
 
 
     """FUNKCJE POMOCNICZE"""

@@ -1,5 +1,7 @@
 from os import path
 import pygame
+pygame.font.init()
+score_font = pygame.font.SysFont('comicsans', 20)
 
 """ TU WRZUCASZ WSZYSTKIE ZMIENNE GLOBALNE JAK NP KOLORY CZY PATH DO JAKIEGOS FOLDERU"""
 
@@ -25,7 +27,7 @@ DARKGREY = (40, 40 ,40)
 BG_COLOR = DARKGREY        # jak cos pozniej bd pewnie po prosty obrazek na calosc
 
 # Game variables
-TILE_SIZE = 64
+TILE_SIZE = 32
 GRID_WIDTH = WIDTH / TILE_SIZE
 GRID_HEIGHT = HEIGHT / TILE_SIZE
 
@@ -47,10 +49,10 @@ ENEMY_HIT_RECT = pygame.Rect(0, 0, 50 ,50)
 ENEMY_HEALTH = 100
 ENEMY_DMG = 25
 KNOCK_BACK = 20
-
+ENEMY_SPAWN_NO = 4
 # Pif Paf Stuff
 BULLET_IMG = "bullet.png"
-BULLET_SPEED = 300
+BULLET_SPEED = 500
 BULLET_LIFE_TIME = 1000 # mozna tez tym sposobem zrobic mele attack
 SHOOT_RATE = 100 
 BULLET_DMG = 20
@@ -97,3 +99,9 @@ def draw_player_health(screen, x, y, percent_to_fill):
         col = RED
     pygame.draw.rect(screen, col, fill_rect)
     pygame.draw.rect(screen, BLACK, outline, 2)
+
+def draw_score(screen, text):
+    label = score_font.render(text, 1, WHITE, RED)
+    screen.blit(label, (int(WIDTH - label.get_width()), 20))
+
+    

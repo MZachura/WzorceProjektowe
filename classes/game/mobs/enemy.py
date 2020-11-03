@@ -42,6 +42,8 @@ class Enemy(pygame.sprite.Sprite):
         # umieraja gdy nie maja hp
         if self.health <= 0:
             self.kill()
+            self.game.generate_new_enemy()
+            self.game.score += 1
     
     # rysuje bar nad glowami
     def draw_health(self):
