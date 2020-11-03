@@ -1,12 +1,13 @@
-from classes.game.map.tilemap import Map
 import pygame
 import random
 from config import *
-from  classes.game.map.tilemap import Map
-from  classes.game.map.camera import Camera
+from classes.game.map.tilemap import Map
+from classes.game.map.camera import Camera
 from classes.game.mobs.player import Player
 from classes.game.obstacles.wall import Wall
 from classes.game.mobs.enemy import Enemy
+from classes.db.database import Database
+
 
 vec = pygame.math.Vector2
 
@@ -20,6 +21,10 @@ class Game:
         self.level = 1
         self.score = 0
         self.how_many_to_spawn = 0
+        
+        # db
+        self.player_name = "Pan Janusz"
+        self.db = Database()
 
     """FUNKCJE GLOWNE"""
     # tworzy obiekt Map ktory zczytuje tilemape
@@ -78,6 +83,7 @@ class Game:
             self.player.health -= ENEMY_DMG
             hit.vel = vec(0, 0)
             if self.player.health <= 0:
+                self.add_score_to_db()
                 self.run = False
         if hits:
             self.player.pos += vec(KNOCK_BACK, 0).rotate(-hits[0].rot)
@@ -123,7 +129,8 @@ class Game:
         x, y = self.gen_coords()
         Enemy(self, x, y)            
 
-    
+    def add_score_to_db(self):
+        self.db.add_score(self.player_name, self.score)
 
 
     """FUNKCJE POMOCNICZE"""
