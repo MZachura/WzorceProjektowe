@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import (QWidget,QMainWindow, QPushButton, QVBoxLayout, QApplication)
 from classes.game.game import Game
+import pygame
 import sys
 
 class Menu(QMainWindow):
@@ -26,16 +27,15 @@ class Menu(QMainWindow):
         self.exitbutton.move(100,200) 
         
     def playbuttonclicked(self):
-        g= Game()
+        g = Game()
         g.set_up()
         g.mainloop()
-        sys.exit(app.exec_())
+        QApplication.quit()
+        
     def exitbuttonclicked(self):
-        sys.exit(app.exec_())
+        QApplication.quit()
     def scorebuttonclicked(self):
         print("score")
 
 
         
-# geometry 300 300 300 300 ; title zombie rush, buttons: play, load,exit, highscores; layout qvbox
-  
