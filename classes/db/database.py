@@ -39,6 +39,7 @@ class Database:
         self.results = []
         for result in self.scores.find({}, {"score": 1, "_id": 1}):
             self.results.append(result)
+
     
     # this func find & delete the lowest elemtnt
     def findTheLowest(self):
@@ -68,12 +69,12 @@ class Database:
                 break
             
             # maybe appending to the list and return it?
-            print(str(counter) + ". " ,result)
+            #print(str(counter) + ". " ,result)
             highScores.append(result)
 
 
         # how many
-        print("the amount of docs: ",self.scores.count_documents({}))
+        #print("the amount of docs: ",self.scores.count_documents({}))
         return highScores
     
     # delete all colections

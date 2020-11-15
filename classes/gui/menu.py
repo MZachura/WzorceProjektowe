@@ -12,7 +12,7 @@ class Menu(QMainWindow):
         self.setWindowTitle("Zombie Rush")
         self.setStyleSheet("background-color: rgb(0,24,26)")
         self.initUI()
-        self.db = Database()
+
 
 
     def initUI(self):
@@ -72,18 +72,25 @@ class Menu(QMainWindow):
     def createTable(self):
         self.scoretable = QTableWidget()
         self.scoretable.setColumnCount(2)
-        self.scoretable.setRowCount(8)
+        self.scoretable.setRowCount(10)
         self.scoretable.setColumnWidth(0,150)
         self.scoretable.setColumnWidth(1,100)
         self.scoretable.setItem(0,0,QTableWidgetItem("Name"))
         self.scoretable.setItem(0, 1, QTableWidgetItem("Score"))
         self.scoretable.horizontalHeader().setStretchLastSection(True)
         self.scoretable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        #self.fillTableMongo()
+        self.fillTableMongo()
 
     def fillTableMongo(self):
-        self.db.findAllScores()
-
+        data = Database()
+        data.findAllScores()
+        dane=[]
+        dane = data.loopfor10()
+        counter=9
+        for i in dane:
+            self.scoretable.setItem(counter,0,QTableWidgetItem(i['Player_name']))
+            self.scoretable.setItem(counter, 1, QTableWidgetItem(str(i['score'])))
+            counter+=-1
     def gamename(self):
         textboxValue=self.textbox.text()
         return textboxValue
