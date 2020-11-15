@@ -10,7 +10,7 @@ class Menu(QMainWindow):
         super(Menu,self).__init__()
         self.setGeometry(200,200,300,300)
         self.setWindowTitle("Zombie Rush")
-        self.setStyleSheet("background-color: rgba(206,235,251,100)")
+        self.setStyleSheet("background-color: rgb(0,24,26)")
         self.initUI()
         self.db = Database()
 
@@ -19,24 +19,24 @@ class Menu(QMainWindow):
         self.textbox = QLineEdit(self)
         self.textbox.move(100,25)
         self.textbox.setText("Player Name")
-        self.textbox.setStyleSheet("background-color : rgba(247,140,104,150)")
+        self.textbox.setStyleSheet("background-color : rgb(0,48,51)")
         self.textbox.setAlignment(Qt.AlignCenter)
         self.playbutton = QPushButton("PLAY",self)
         self.playbutton.move(100,100)
-        self.playbutton.setStyleSheet("background-color : rgba(102,167,197,200)")
+        self.playbutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.playbutton.clicked.connect(self.playbuttonclicked)
         self.scorebutton = QPushButton("SCORE",self)
-        self.scorebutton.setStyleSheet("background-color : rgba(102,167,197,200)")
+        self.scorebutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.scorebutton.clicked.connect(self.scorebuttonclicked)
         self.scorebutton.move(100,150)
         self.backbutton = QPushButton("BACK",self)
         self.backbutton.move(100, 250)
         self.backbutton.hide()
-        self.backbutton.setStyleSheet("background-color : rgba(102,167,197,200)")
+        self.backbutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.exitbutton = QPushButton("EXIT",self)
         self.exitbutton.clicked.connect(self.exitbuttonclicked)
         self.exitbutton.move(100,250)
-        self.exitbutton.setStyleSheet("background-color : rgba(102,167,197,200)")
+        self.exitbutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.createTable()
         self.scoretable.move(50,100)
 
@@ -51,7 +51,7 @@ class Menu(QMainWindow):
     def exitbuttonclicked(self):
         QApplication.quit()
     def scorebuttonclicked(self):
-
+        self.textbox.hide()
         self.scorebutton.hide()
         self.exitbutton.hide()
         self.playbutton.hide()
@@ -62,6 +62,7 @@ class Menu(QMainWindow):
         #mongo zostało
 
     def backbuttonclicked(self):
+        self.textbox.show()
         self.scorebutton.show()
         self.exitbutton.show()
         self.playbutton.show()
