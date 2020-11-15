@@ -3,10 +3,21 @@ from pymongo import MongoClient
 import pprint
 
 class Database:
+    _instance = None
+    @staticmethod
+    def get_instance():
+        if Database._instance == None:
+            Database()
+        return Database._instance
     def __init__(self):
         self.cluster = MongoClient('localhost', 27017)
         self.db = self.cluster["shooterek"]
         self.scores = self.db["scores"]
+
+        if Database._instance != None:
+            raise Exception("To je singleton tego nie wywolasz 2 razy :)")
+        else:
+            Database._instance = self
 
     def add_score(self, player_name, score):
         to_send = {

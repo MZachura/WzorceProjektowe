@@ -24,8 +24,7 @@ class Game:
         self.how_many_to_spawn = 0
 
         # db
-
-        self.db = Database()
+        self.db = Database.get_instance()
 
     """FUNKCJE GLOWNE"""
     # tworzy obiekt Map ktory zczytuje tilemape
