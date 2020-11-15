@@ -9,6 +9,7 @@ from classes.game.mobs.enemy import Enemy
 from classes.db.database import Database
 
 
+
 vec = pygame.math.Vector2
 
 class Game:
@@ -21,9 +22,9 @@ class Game:
         self.level = 1
         self.score = 0
         self.how_many_to_spawn = 0
-        
+
         # db
-        self.player_name = "Pan Janusz"
+
         self.db = Database()
 
     """FUNKCJE GLOWNE"""
@@ -152,6 +153,9 @@ class Game:
         elif tile == "M":
             Enemy(self, col, row)
             
+    #name
+    def name(self,namemenu):
+        self.player_name = namemenu
 
     def quit(self):
         self.run = False
