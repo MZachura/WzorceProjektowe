@@ -2,14 +2,14 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from classes.db.database import Database
 from classes.game.game import Game
-
+from config import *
 
 class Menu(QMainWindow):
 
     def __init__(self):
         super(Menu,self).__init__()
         self.setGeometry(200,200,300,300)
-        self.setWindowTitle("Zombie Rush")
+        self.setWindowTitle(TITLE)
         self.setStyleSheet("background-color: rgb(0,24,26)")
         self.initUI()
 
@@ -42,7 +42,7 @@ class Menu(QMainWindow):
 
     def playbuttonclicked(self):
         self.gn = self.gamename()
-        g = Game()
+        g = Game(0)     # 0 gracz 1 tester
         g.name(self.gn)
         g.set_up()
         g.mainloop()
@@ -59,7 +59,6 @@ class Menu(QMainWindow):
         self.backbutton.show()
         self.backbutton.clicked.connect(self.backbuttonclicked)
 
-        #mongo zostało
 
     def backbuttonclicked(self):
         self.textbox.show()

@@ -6,8 +6,10 @@ score_font = pygame.font.SysFont('comicsans', 20)
 """ TU WRZUCASZ WSZYSTKIE ZMIENNE GLOBALNE JAK NP KOLORY CZY PATH DO JAKIEGOS FOLDERU"""
 
 SCR_SIZE = (WIDTH, HEIGHT) = (1024, 768)
-TITLE = "THE TILEMAP GAME"
+TITLE = "Zombie Rush"
 FPS = 60
+
+ENEMY_SPAWN_NO = 5
 
 # game folders paths
 GAME_FOLDER = path.dirname(__file__)

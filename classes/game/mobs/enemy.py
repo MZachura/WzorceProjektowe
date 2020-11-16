@@ -1,5 +1,6 @@
 import pygame
 from config import *
+
 vec = pygame.math.Vector2
 
 class Enemy(pygame.sprite.Sprite):

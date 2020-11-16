@@ -8,20 +8,24 @@ from classes.game.obstacles.wall import Wall
 from classes.game.mobs.enemy import Enemy
 from classes.db.database import Database
 
-
+from classes.game.spritefactory import SpriteFactory
 
 vec = pygame.math.Vector2
 
 class Game:
-    def __init__(self):
+    def __init__(self, tester):
         pygame.init()
         self.screen = pygame.display.set_mode(SCR_SIZE)
         pygame.display.set_caption(TITLE)
+        
         self.clock = pygame.time.Clock()
         self.load_data()
         self.level = 1
         self.score = 0
         self.how_many_to_spawn = 0
+        self.tester = tester
+
+
 
         # db
         self.db = Database.get_instance()
@@ -41,9 +45,11 @@ class Game:
 
         self.bullet_img = pygame.image.load(path.join(IMG_FOLDER, BULLET_IMG)).convert_alpha()
 
+        pygame.display.set_icon(self.enemy_img)
+
     # tu tworzysz wszystkie obiekty np kamere 
     def set_up(self):
-        self.all_sprites = pygame.sprite.Group()    # tu dodajesz wszytkie sprity
+        self.all_sprites = pygame.sprite.Group()    # tu dodajesz wszytkie spritey
         self.walls = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
@@ -80,6 +86,8 @@ class Game:
         # czy zombie dotknely gracza O.O
         hits = pygame.sprite.spritecollide(self.player, self.enemies, False, collide_hit_rect)
         for hit in hits:
+            if self.tester == 1:     #wtedy jest testerem
+                continue
             self.player.health -= ENEMY_DMG
             hit.vel = vec(0, 0)
             if self.player.health <= 0:
@@ -118,17 +126,25 @@ class Game:
             if self.player.pos.x != cordx and self.player.pos.y != cordy:
                 find_coords = False # znalazlo i nie koliduje z playerm
         return cordx, cordy
-    '''
+    
     def generate_new_enemy(self):
+        if self.score % 10 == 0:
+            self.level += 1 
+
         while (len(self.enemies) < ENEMY_SPAWN_NO * self.level):
+            '''
             x, y = self.gen_coords()
             Enemy(self, x, y)
+            '''
+            SpriteFactory.get_sprite("M", self)
     '''
 
     def generate_new_enemy(self):
         x, y = self.gen_coords()
-        Enemy(self, x, y)            
-
+        SpriteFactory.get_sprite("M", self) 
+       # Enemy(self, x, y)            
+    '''
+    
     def add_score_to_db(self):
         self.db.add_score(self.player_name, self.score)
 
@@ -141,6 +157,7 @@ class Game:
         for y in range(0, HEIGHT, TILE_SIZE):
             pygame.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
+    
     # tu dajesz wszystkie symbole co oanczaja na tilemapie
     def what_to_create(self, tile, row, col):
         if tile == 'P':
@@ -151,7 +168,12 @@ class Game:
 
         elif tile == "M":
             Enemy(self, col, row)
-            
+    '''        
+
+    def what_to_create(self, tile, row, col):
+        if tile == 'P' or tile == '1' or tile == 'M': 
+            SpriteFactory.get_sprite(tile, self, row, col)
+    '''
     #name
     def name(self,namemenu):
         self.player_name = namemenu

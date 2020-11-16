@@ -56,6 +56,7 @@ class Database:
         return self.scores.count_documents({})
 
     def loopfor10(self):
+        self.update()
         # counter the number that cannot be exceed
         counter = 0
         # the list that will be returned
