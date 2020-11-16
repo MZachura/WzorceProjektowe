@@ -58,5 +58,5 @@ class Player(pygame.sprite.Sprite):
             if now - self.last_shot > SHOOT_RATE:
                 self.last_shot = now
                 dir = vec(1, 0).rotate(-self.rot)   # w ktora strone ma leciec
-                Bullet(self.game, self.pos, dir)
+                Bullet(self.game, self.pos , dir)
                 

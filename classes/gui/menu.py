@@ -8,7 +8,7 @@ class Menu(QMainWindow):
 
     def __init__(self):
         super(Menu,self).__init__()
-        self.setGeometry(200,200,300,300)
+        self.setGeometry(328,140,1024,768)
         self.setWindowTitle(TITLE)
         self.setStyleSheet("background-color: rgb(0,24,26)")
         self.initUI()
@@ -17,37 +17,51 @@ class Menu(QMainWindow):
 
     def initUI(self):
         self.textbox = QLineEdit(self)
-        self.textbox.move(100,25)
+        self.textbox.move(50,25)
         self.textbox.setText("Player Name")
-        self.textbox.setStyleSheet("background-color : rgb(0,48,51)")
+        self.textbox.setStyleSheet("background-color : rgb(0,230,230)")
         self.textbox.setAlignment(Qt.AlignCenter)
         self.playbutton = QPushButton("PLAY",self)
-        self.playbutton.move(100,100)
+        self.playbutton.move(50,100)
         self.playbutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.playbutton.clicked.connect(self.playbuttonclicked)
+        self.testbutton = QPushButton("TEST",self)
+        self.testbutton.move(50,200)
+        self.testbutton.setStyleSheet("background-color : rgb(0,157,166)")
+        self.testbutton.clicked.connect(self.testbuttonclicked)
         self.scorebutton = QPushButton("SCORE",self)
         self.scorebutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.scorebutton.clicked.connect(self.scorebuttonclicked)
-        self.scorebutton.move(100,150)
+        self.scorebutton.move(50,150)
         self.backbutton = QPushButton("BACK",self)
-        self.backbutton.move(100, 250)
+        self.backbutton.move(50, 250)
         self.backbutton.hide()
         self.backbutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.exitbutton = QPushButton("EXIT",self)
         self.exitbutton.clicked.connect(self.exitbuttonclicked)
-        self.exitbutton.move(100,250)
+        self.exitbutton.move(50,250)
         self.exitbutton.setStyleSheet("background-color : rgb(0,157,166)")
         self.createTable()
-        self.scoretable.move(50,100)
+        self.scoretable.move(358,140)
 
     def playbuttonclicked(self):
         self.gn = self.gamename()
-        g = Game(0)     # 0 gracz 1 tester
+        test=0
+        g = Game(test)     # 0 gracz 1 tester
         g.name(self.gn)
         g.set_up()
         g.mainloop()
         QApplication.quit()
-        
+
+    def testbuttonclicked(self):
+        self.gn = self.gamename()
+        test = 1
+        g = Game(test)  # 0 gracz 1 tester
+        g.name(self.gn)
+        g.set_up()
+        g.mainloop()
+        QApplication.quit()
+
     def exitbuttonclicked(self):
         QApplication.quit()
     def scorebuttonclicked(self):
@@ -55,6 +69,7 @@ class Menu(QMainWindow):
         self.scorebutton.hide()
         self.exitbutton.hide()
         self.playbutton.hide()
+        self.testbutton.hide()
         self.scoretable.show()
         self.backbutton.show()
         self.backbutton.clicked.connect(self.backbuttonclicked)
@@ -65,6 +80,7 @@ class Menu(QMainWindow):
         self.scorebutton.show()
         self.exitbutton.show()
         self.playbutton.show()
+        self.testbutton.show()
         self.backbutton.hide()
         self.scoretable.hide()
 

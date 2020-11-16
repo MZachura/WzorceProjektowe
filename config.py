@@ -29,7 +29,7 @@ DARKGREY = (40, 40 ,40)
 BG_COLOR = DARKGREY        # jak cos pozniej bd pewnie po prosty obrazek na calosc
 
 # Game variables
-TILE_SIZE = 32
+TILE_SIZE = 64
 GRID_WIDTH = WIDTH / TILE_SIZE
 GRID_HEIGHT = HEIGHT / TILE_SIZE
 
