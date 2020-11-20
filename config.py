@@ -11,6 +11,18 @@ FPS = 60
 
 ENEMY_SPAWN_NO = 5
 
+# COLORS FOR MSGs
+BLACK_MSG = '\33[45m'
+RED_MSG = '\033[91m'
+GREEN_MSG = '\033[92m'
+YELLOW_MSG = '\033[93m'
+ENDC = '\033[0m'        # color ending
+
+
+# MESSAGES
+DB_CONNECTION_MESSAGE = " Database connection established"
+CAMERA_CREATED_MSG = " Camera created "
+MENU_MSG = "Menu created"
 # game folders paths
 GAME_FOLDER = path.dirname(__file__)
 MAP_FOLDER = path.join(GAME_FOLDER, "maps")

@@ -1,3 +1,4 @@
+from message import Message
 import pygame
 from config import *
 
@@ -23,6 +24,9 @@ class Enemy(pygame.sprite.Sprite):
         self.acc =vec(0, 0)
 
         self.health = ENEMY_HEALTH
+
+        # dekorator
+        self.msg = Message(201, "Enemy created")
 
     def update(self):
         self.rot = (self.game.player.pos - self.pos).angle_to(vec(1, 0))

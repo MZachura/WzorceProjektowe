@@ -1,3 +1,4 @@
+from message import Message
 import pygame
 from config import *
 
@@ -6,6 +7,9 @@ class Camera:
         self.camera = pygame.Rect(0,0, width, height)       # bedzie sprawdzaxc jak daleko jest sie od konca mapy
         self.width = width
         self.height = height
+
+        # dekorator
+        self.msg = Message(1, "Camera created")
 
     def apply(self, entity):        
         return entity.rect.move(self.camera.topleft)

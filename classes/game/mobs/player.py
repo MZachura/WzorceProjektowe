@@ -1,3 +1,4 @@
+from message import Message
 import pygame
 from config import *
 from classes.game.weapons.bullet import Bullet
@@ -22,6 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.health = PLAYER_HEALTH
 
 
+        self.msg = Message(0, "Player created")
 
     def update(self):
         self.get_keys()

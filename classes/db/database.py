@@ -1,3 +1,5 @@
+from config import DB_CONNECTION_MESSAGE
+from message import Message
 import pymongo
 from pymongo import MongoClient
 import pprint
@@ -13,6 +15,8 @@ class Database:
         self.cluster = MongoClient('localhost', 27017)
         self.db = self.cluster["shooterek"]
         self.scores = self.db["scores"]
+        # do dekoratora
+        self.msg = Message(200, DB_CONNECTION_MESSAGE)
 
         if Database._instance != None:
             raise Exception("To je singleton tego nie wywolasz 2 razy :)")

@@ -1,3 +1,4 @@
+from message import Message, MessageDecorator
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from classes.db.database import Database
@@ -12,6 +13,9 @@ class Menu(QMainWindow):
         self.setWindowTitle(TITLE)
         self.setStyleSheet("background-color: rgb(0,24,26)")
         self.initUI()
+
+        # do dekoratora
+        self.msg = Message(200, MENU_MSG)
 
 
 
@@ -48,6 +52,8 @@ class Menu(QMainWindow):
         self.gn = self.gamename()
         test=0
         g = Game(test)     # 0 gracz 1 tester
+        # dekorator
+        print(MessageDecorator(g))
         g.name(self.gn)
         g.set_up()
         g.mainloop()

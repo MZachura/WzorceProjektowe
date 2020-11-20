@@ -1,3 +1,4 @@
+from message import Message, MessageDecorator
 import pygame
 import random
 from config import *
@@ -7,7 +8,7 @@ from classes.game.mobs.player import Player
 from classes.game.obstacles.wall import Wall
 from classes.game.mobs.enemy import Enemy
 from classes.db.database import Database
-
+import sys
 from classes.game.spritefactory import SpriteFactory
 
 vec = pygame.math.Vector2
@@ -24,6 +25,8 @@ class Game:
         self.score = 0
         self.how_many_to_spawn = 0
         self.tester = tester
+        # decorator
+        self.msg = Message(200, "Game object created")
 
 
 
@@ -58,7 +61,10 @@ class Game:
             for col, tile in enumerate(tiles):
                 self.what_to_create(tile, row, col)
 
+        
         self.camera = Camera(self.map.width, self.map.height)
+        # dekorator
+        print(MessageDecorator(self.camera))
 
     # do wywalania w main albo w menu jak sie klikanie przycisk
     def mainloop(self):
@@ -132,11 +138,12 @@ class Game:
             self.level += 1 
 
         while (len(self.enemies) < ENEMY_SPAWN_NO * self.level):
-            '''
+            
             x, y = self.gen_coords()
-            Enemy(self, x, y)
-            '''
-            SpriteFactory.get_sprite("M", self)
+            x = Enemy(self, x, y)
+            print(MessageDecorator(x))
+            
+           # SpriteFactory.get_sprite("M", self)
     '''
 
     def generate_new_enemy(self):
@@ -162,6 +169,7 @@ class Game:
     def what_to_create(self, tile, row, col):
         if tile == 'P':
             self.player = Player(self, col, row)
+            print(MessageDecorator(self.player))
 
         elif tile == '1':
             Wall(self, col, row)
@@ -181,5 +189,3 @@ class Game:
     def quit(self):
         self.run = False
         pygame.quit()
-
-    
