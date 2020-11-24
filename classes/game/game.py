@@ -26,7 +26,7 @@ class Game:
         self.how_many_to_spawn = 0
         self.tester = tester
         # decorator
-        self.msg = Message(200, "Game object created")
+        self.msg = Message(200, f"Game object created {self.__class__}")
 
 
 
@@ -128,6 +128,7 @@ class Game:
         while (find_coords):
             cordx = random.randint(1, GRID_WIDTH - 1) #* TILE_SIZE
             cordy = random.randint(1, GRID_HEIGHT - 1) #* TILE_SIZE
+            
 
             if self.player.pos.x != cordx and self.player.pos.y != cordy:
                 find_coords = False # znalazlo i nie koliduje z playerm

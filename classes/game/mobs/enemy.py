@@ -26,7 +26,7 @@ class Enemy(pygame.sprite.Sprite):
         self.health = ENEMY_HEALTH
 
         # dekorator
-        self.msg = Message(201, "Enemy created")
+        self.msg = Message(201, f"Enemy created  {self.__class__}")
 
     def update(self):
         self.rot = (self.game.player.pos - self.pos).angle_to(vec(1, 0))
@@ -52,6 +52,7 @@ class Enemy(pygame.sprite.Sprite):
     
     # rysuje bar nad glowami
     def draw_health(self):
+        
         if self.health > 40:
             col = GREEN
         else:

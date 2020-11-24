@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.health = PLAYER_HEALTH
 
 
-        self.msg = Message(0, "Player created")
+        self.msg = Message(0, f"Player created {self.__class__}")
 
     def update(self):
         self.get_keys()

@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from classes.db.database import Database
 from classes.game.game import Game
 from config import *
+from classes.gui.iterator import Iterable
 
 class Menu(QMainWindow):
 
@@ -15,7 +16,7 @@ class Menu(QMainWindow):
         self.initUI()
 
         # do dekoratora
-        self.msg = Message(200, MENU_MSG)
+        self.msg = Message(200, f"Menu created {self.__class__}")
 
 
 
@@ -108,10 +109,14 @@ class Menu(QMainWindow):
         dane=[]
         dane = data.loopfor10()
         counter=9
-        for i in dane:
-            self.scoretable.setItem(counter,0,QTableWidgetItem(i['Player_name']))
-            self.scoretable.setItem(counter, 1, QTableWidgetItem(str(i['score'])))
+        ITERATOR = Iterable()       # dla danych
+        while ITERATOR.has_next():
+            i = ITERATOR.next()
+        #for i in dane:
+            self.scoretable.setItem(counter,0,QTableWidgetItem(dane[i]['Player_name']))
+            self.scoretable.setItem(counter, 1, QTableWidgetItem(str(dane[i]['score'])))
             counter+=-1
+
     def gamename(self):
         textboxValue=self.textbox.text()
         return textboxValue

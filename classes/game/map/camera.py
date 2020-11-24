@@ -9,7 +9,7 @@ class Camera:
         self.height = height
 
         # dekorator
-        self.msg = Message(1, "Camera created")
+        self.msg = Message(1, f"Camera created {self.__class__}")
 
     def apply(self, entity):        
         return entity.rect.move(self.camera.topleft)

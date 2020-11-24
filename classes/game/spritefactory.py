@@ -20,8 +20,6 @@ class SpriteFactory():
 
             if spriteType == 'M':
                 return Enemy(game, x, y)
-            if spriteType == 'P':
-                Player(game, x, y)
             raise AssertionError("Sprite type not found")
 
         except AssertionError as _e:

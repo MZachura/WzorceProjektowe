@@ -22,7 +22,7 @@ ENDC = '\033[0m'        # color ending
 # MESSAGES
 DB_CONNECTION_MESSAGE = " Database connection established"
 CAMERA_CREATED_MSG = " Camera created "
-MENU_MSG = "Menu created"
+#MENU_MSG = f"Menu created {self.__class__}"
 # game folders paths
 GAME_FOLDER = path.dirname(__file__)
 MAP_FOLDER = path.join(GAME_FOLDER, "maps")
@@ -72,7 +72,6 @@ SHOOT_RATE = 100
 BULLET_DMG = 20
 
 
-
 # Funkcje wspolne dla wszystkich spritow pewnie bd mozna je jakos we wzorcach powstawiac
 def collide_hit_rect(sp1, sp2):
     return sp1.hit_rect.colliderect(sp2.rect)
@@ -96,6 +95,7 @@ def collide_with_walls(sprite, group, dir):
                 sprite.pos.y = hits[0].rect.bottom + sprite.hit_rect.height / 2
             sprite.vel.y = 0
             sprite.hit_rect.centery = sprite.pos.y
+
 
 # health bar w lewym gornym rogu
 def draw_player_health(screen, x, y, percent_to_fill):
